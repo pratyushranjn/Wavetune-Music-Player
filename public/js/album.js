@@ -2,7 +2,7 @@ let currentPage = 1;
 const songsPerPage = 32;
 let songData = [];
 let currentIndex = 0;
-const CACHE_TIME = 15 * 60 * 1000; 
+const CACHE_TIME = 60 * 60 * 1000; // 1 hour in milliseconds
 
 import { playSong } from "./script.js";
 
