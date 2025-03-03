@@ -1,0 +1,115 @@
+.cards {
+    position: relative;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-left: 14.5rem;
+
+    align-content: center;
+
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    font-size: 0.8rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: none;
+
+    
+}
+
+.circle {
+    height: 110px;
+    width: 110px;
+    border: none;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.6s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.4);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.album,
+.artist {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    padding: 10px;
+}
+
+.card span {
+    z-index: 1;
+    font-size: 1rem;
+}
+
+.song-name {
+    text-align: center;
+    margin-top: 5px;
+    color: aliceblue;
+    text-decoration: none;
+    font-size: 0.9rem;
+    z-index: 1;
+    height: 1.5rem;
+    
+    width:110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    margin-left: -0.4rem;
+
+
+}
+
+.card-link {
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .cards {
+        padding-left: 1rem;
+    }
+}
+
+
+.dev {
+    text-align: center;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {  
+    .dev {
+        position: absolute;
+        bottom: 4.9rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+        color: white; 
+    }
+}
