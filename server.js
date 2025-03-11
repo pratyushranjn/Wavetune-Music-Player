@@ -13,7 +13,7 @@ const User = require("./models/user.js");
 const path = require("path");
 const helmet = require("helmet");
 
-const dbUrl = process.env.ATLAS_URL;
+const dbUrl = "mongodb://localhost:27017/music" || process.env.ATLAS_URL;
 const authRoutes = require("./routes/auth.js");
 const songRoutes = require("./routes/music.js");
 

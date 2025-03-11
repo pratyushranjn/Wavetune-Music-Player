@@ -1,4 +1,3 @@
-// DOM Elements
 const elements = {
     playPauseBtn: document.getElementById("playPauseBtn"),
     prevBtn: document.getElementById("prevBtn"),
@@ -112,7 +111,11 @@ export function playSong(song) {
 
     // Update UI and play the song
     elements.songNameElement.textContent = song.name;
-    document.querySelector(".music-player img").src = song.thumbnail || "/assets/default.jpg";
+    const imgElement = document.querySelector(".music-player img");
+    imgElement.src = song.thumbnail || thumbnail;
+    imgElement.setAttribute("draggable", "false"); 
+    imgElement.oncontextmenu = (e) => e.preventDefault(); 
+
     elements.songNameElement.style.animation = 'none';
     setTimeout(() => elements.songNameElement.style.animation = 'marquee 10s linear infinite', 12);
 
@@ -247,7 +250,7 @@ const checkIfFavorite = async (songId) => {
 
 
 elements.favIcon.addEventListener("click", async () => {
-    const song = state.songList[state.currentSongIndex];
+    const song = state.songList[state.currentSongIndex] ;
     if (!song) return;
 
     state.isFavorited = !state.isFavorited;

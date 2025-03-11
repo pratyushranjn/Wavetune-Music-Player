@@ -5,6 +5,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", Arial, Helvetica, sans-serif;
+    -webkit-tap-highlight-color: transparent !important;
 }
 
 body {
@@ -14,6 +15,8 @@ body {
     justify-content: center;
     height: 100vh;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent !important;
+    
 }
 
 .container {
@@ -40,7 +43,6 @@ body {
     top: 0;
     width: 100%;
     z-index: 10;
-    /* Ensure it stays above other content */
 }
 
 .down {
@@ -130,7 +132,7 @@ body {
 
 .search-results div {
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.8rem;      
 }
 
 .song-img {
@@ -326,7 +328,7 @@ body {
 
     #searchInput {
         width: 70%;  /* Keep the reduced width */
-        margin-left: 4rem; /* Push to the right */
+        margin-left: 3.8rem; /* Push to the right */
         margin-right: 10px; /* Add some right spacing */
         font-size: 0.90rem; 
         padding: 9px 12px; 
@@ -403,18 +405,16 @@ body {
         align-items: center;
         position: relative;
         top: -1rem;
-        left: -15px;
+        left: -17px;
+        -webkit-tap-highlight-color: transparent !important;
     }
 
     .down{
         height: 110%;
     }
 
-    
-
     .logout {
         position: relative;
-        /* Keep it within the normal flow */
         top: 3rem;
         left: -110px; 
         font-size: 14px;
@@ -428,11 +428,7 @@ body {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         cursor: pointer;
         color: white;
-        max-width: 100px;
-        
-        /* Make the button take full width */
-
-        
+        max-width: 100px;  
     }
 
  

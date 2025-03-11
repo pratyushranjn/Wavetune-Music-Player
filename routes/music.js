@@ -57,13 +57,23 @@ router.post("/add-to-favorites", isLoggedIn, async (req, res) => {
   const { song } = req.body;
   const userId = req.user?._id;
 
-  if (!song?.id) return res.status(400).json({ error: "Invalid song details" });
+  if (!song?.id || !song?.thumbnail || !song?.audioUrl || !song?.name) {
+    return res.status(400).json({ error: "Invalid song details" });
+  }
 
   try {
     const exists = await User.exists({ _id: userId, "favoriteSongs.id": song.id });
     if (exists) return res.json({ message: "Song is already in favorites!" });
 
-    await User.findByIdAndUpdate(userId, { $push: { favoriteSongs: song } });
+    const songData = {
+      id: song.id,
+      name: song.name,
+      album: song.album || "Unknown Album",
+      audioUrl: song.audioUrl || song.audioLinks?.[0]?.link || "",
+      thumbnail: song.thumbnail
+    };
+
+    await User.findByIdAndUpdate(userId, { $push: { favoriteSongs: songData } });
     res.json({ message: "Song added to favorites!" });
   } catch (error) {
     console.error("Error adding to favorites:", error);
@@ -77,15 +87,27 @@ router.post("/remove-from-favorites", isLoggedIn, async (req, res) => {
   const userId = req.user?._id;
 
   if (!songId) return res.status(400).json({ error: "Invalid song ID" });
+  if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
   try {
-    await User.findByIdAndUpdate(userId, { $pull: { favoriteSongs: { id: songId } } });
-    res.json({ message: "Song removed from favorites!" });
+    console.log("Removing song with ID:", songId); // Debugging
+
+    const result = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { favoriteSongs: { id: songId } } },
+      { new: true } // Return updated document
+    );
+
+    if (!result) return res.status(404).json({ error: "User not found or song not in favorites" });
+
+    console.log("Updated favorites:", result.favoriteSongs);
+    res.json({ message: "Song removed from favorites!", updatedFavorites: result.favoriteSongs });
   } catch (error) {
     console.error("Error removing from favorites:", error);
     res.status(500).json({ error: "Failed to remove song from favorites." });
   }
 });
+
 
 // Check if Song is in Favorites
 router.get("/is-favorite", isLoggedIn, async (req, res) => {

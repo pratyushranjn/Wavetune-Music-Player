@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema({
         required: true
 
       },
+      thumbnail: {
+        type: String,
+      },
       name: {
         type: String,
         required: true

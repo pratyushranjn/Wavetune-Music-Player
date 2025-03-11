@@ -34,8 +34,6 @@
     gap: 10px;
     padding: 0;
     width: 100%;
-
- 
 }
 
 .option li {
@@ -103,10 +101,9 @@
 .favorite-list {
     opacity: 0;
     transform: translateY(-10px);
-    display: block; /* Always present but hidden with opacity */
+    display: block;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, transform 0.2s ease-in, visibility 0.3s;
-    
     position: relative;
     left: 0;
     top: 0;
@@ -118,7 +115,7 @@
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-   
+
     border: 1px solid #4A90E2;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -137,7 +134,6 @@
 }
 
 
-
 .favorite-list ul li {
     list-style: none;
     display: flex;
@@ -149,42 +145,40 @@
     border-radius: 8px;
     transition: background 0.3s;
 
-
-    padding: 5px 8px;  /* Reduce padding */
-    line-height: 1.2;  /* Adjust line height */
-    min-height: 24px;  /* Set a minimum height */
+    padding: 5px 8px;
+    line-height: 1.2;
+    min-height: 24px;
  
-   
+}
+
+
+.nf {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out !important;
+}
+
+/* Reduce opacity and add a slight scale effect on hover */
+.nf:hover {
+    opacity: 0.4 !important;
+    transform: scale(0.95) !important;
+}
+
+
+/* Make the icon red on hover for Favourite */
+.sidebar-link:not(.nf):hover i {
+    color: red !important;
+    transition: color 0.3s ease-in-out;
 }
 
 
 
-/* No effect by default */
-.nf {
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out !important;
-  }
-  
-  /* Reduce opacity and add a slight scale effect on hover */
-  .nf:hover {
-    opacity: 0.4 !important;
-    transform: scale(0.95) !important;
-  }
-  
 
-  /* Make the icon red on hover for Favourite */
-.sidebar-link:not(.nf):hover i {
-    color: red !important;
-    transition: color 0.3s ease-in-out;
-  }
-  
-
-
-  
 /* Ensure Hamburger is always on top */
 .hamburger {
     display: none;
-    z-index: 3000; /* Highest layer */
-    position: fixed; /* Ensures it stays on top */
+    z-index: 3000;
+    /* Highest layer */
+    position: fixed;
+    /* Ensures it stays on top */
     top: 1.75rem;
     left: 1rem;
     width: 23px;
@@ -198,7 +192,7 @@
 /* Show and Animate Hamburger Only on Small Screens */
 @media (max-width: 768px) {
 
-    .option > ul {
+    .option>ul {
         margin-top: 1.25rem;
     }
 
@@ -250,14 +244,13 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        width: 22px;  /* Smaller size */
+        width: 22px;
+        /* Smaller size */
         height: 18px;
-        opacity: 0.6; /* Lower opacity for a subtle effect */
+        opacity: 0.6;
+        /* Lower opacity for a subtle effect */
 
-        top: 1.35rem;
+        top: 1.47rem;
     }
 
-
-
 }
-

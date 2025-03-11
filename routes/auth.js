@@ -4,7 +4,6 @@ const User = require("../models/user");
 const { isLoggedIn } = require('../middleware');
 const router = express.Router();
 
-
 // Register User
 router.post("/signup", async (req, res, next) => {
   const { username, email, password } = req.body;
