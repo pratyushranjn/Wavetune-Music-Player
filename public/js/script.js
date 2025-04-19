@@ -58,7 +58,7 @@ const searchSongs = async (query) => {
     } catch (error) {
         console.error("Error fetching search results:", error);
         if (elements.resultsContainer) {
-            elements.resultsContainer.innerHTML = "<div>Error fetching results. Please try again.</div>";
+            elements.resultsContainer.innerHTML = "<div>⚠️ No songs found for your search query.</div>";
         }
     }
 };
