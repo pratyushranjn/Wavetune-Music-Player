@@ -30,7 +30,15 @@ function loadCachedSongs() {
 
 async function fetchSongs() {
     try {
-        const artists = ["Anuv Jain", "Arijit", "Jubin", "Dino James", "Indresh Upadhyay", "Devi Chitralekha"];
+        const artists = [
+              "Arijit Singh",        
+              "Indresh Upadhyay",       
+              "Anuv Jain",          
+              "Shreya Ghoshal",      
+              "Hansraj Raghuwanshi",    
+              "Kailash Kher",
+              "Darshan Raval",
+            ];
 
         // Fetch songs in parallel
         const responses = await Promise.all(
