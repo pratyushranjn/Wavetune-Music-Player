@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Music Streaming App</title>
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="shortcut icon" href="/assets/icon.png" type="image/x-icon">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login-box">
+        <h2 class="login-title">Sign Up</h2>
+
+        <form action="/signup" method="post" id="signup-form">
+          <div>
+            <input
+              name="username"
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div>
+            <input
+              name="email"
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Email Address"
+              required
+            />
+          </div>
+          <div>
+            <input
+              name="password"
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+        <p class="signup-link">
+          Already have an account? <a href="/login">Log In</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

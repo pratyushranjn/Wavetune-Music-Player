@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error</title>
+  <link rel="stylesheet" href="/css/error.css">
+</head>
+<body>
+  <div class="error-section">
+    <h1 class="error-title"><%= errorTitle %></h1>
+    <p class="error-message"><%= errorMessage %></p>
+    <button class="error-button" onclick="window.location.href='/'">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+      Go Back Home
+    </button>
+  </div>
+</body>
+</html>

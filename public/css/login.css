@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #303f93;
+    background-image: url(/assets/image.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(18px);
+
+}
+
+
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr; /* Only one column for smaller screens */
+    width: 100%;
+    max-width: 450px;
+}
+
+.login-box {
+    background: rgba(0, 0, 0, 0.7);
+   
+    border-radius: 12px;
+    padding: 40px;
+    color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.form-control {
+    
+    background-color: transparent;
+    border: 1px solid #ffff;
+
+    color: #fff;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 15px;
+   
+}
+
+.form-control:focus {
+    border-color: #1aa34a;
+    box-shadow: 0 0 5px #1db954;
+}
+
+.form-control.has-text {
+    border-color: #1db954 ; /* Green border when typing */
+    box-shadow: 0 0 5px #1db954;
+}
+
+.errormsg {
+    color: #e74c3c;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid #e74c3c;
+    border-radius: 8px;
+    width: 70%;
+}
+
+.btn-primary {
+    background-color: #1db954ee;
+    border: 1px solid transparent;
+    padding: 12px;
+    width: 100%;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    transition: border-color 0.25s;
+}
+
+.btn-primary:hover{
+  
+    background-color: transparent;
+    border: 1px solid #646cff;
+    outline: none;
+    
+}
+
+.signup-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #b3b3b3;
+}
+
+.signup-link a {
+    color: #1db954;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 575.98px) {
+    .container {
+        grid-template-columns: 1fr; /* Full-width container for mobile */
+        padding: 15px;
+    }
+
+    .login-box {
+        padding: 30px;
+        width: 100%;
+    }
+
+    .login-title {
+        font-size: 24px;
+    }
+}

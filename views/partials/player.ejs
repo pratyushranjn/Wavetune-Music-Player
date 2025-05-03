@@ -1,0 +1,62 @@
+      <!-- Music Player Section -->
+      <section class="music-player">
+        <img src="/assets/radha_krishna.png" alt="" width="55px" />
+        <div id="player"></div>
+
+        <!-- Player Controls (Center) -->
+        <div class="player-controls">
+          <div id="song-name-container">
+            <span id="song-name"> Song Title</span>
+          </div>
+
+          <button class="prev" id="prevBtn">
+            <i class="fa-solid fa-backward"></i>
+          </button>
+          <button class="play-pause" id="playPauseBtn">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button class="next" id="nextBtn">
+            <i class="fa-solid fa-forward"></i>
+          </button>
+        </div>
+
+        <div class="player-controls">
+          <div id="shuffleBtn">
+            <i class="fa fa-random"></i>
+          </div>
+          <div id="repeatBtn">
+            <i class="fa fa-repeat"></i>
+          </div>
+        </div>
+
+        <i class="fa-regular fa-heart" id="fav"></i>
+
+        <audio id="audioPlayer" controls hidden></audio>
+
+        <!-- Progress Bar -->
+        <input
+          type="range"
+          class="progress-bar r"
+          id="progressBar"
+          value="0"
+          max="100"
+          step="0.1"
+        />
+        <span class="time" id="currentTime">0:00</span>
+
+        <!-- Right Controls (Volume Bar and Volume Button) -->
+        <div class="right-controls">
+          <button class="volume" id="muteBtn">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <input
+            type="range"
+            class="volume-bar"
+            id="volumeBar"
+            min="0"
+            max="100"
+            value="100"
+            class="volume-bar"
+          />
+        </div>
+      </section>

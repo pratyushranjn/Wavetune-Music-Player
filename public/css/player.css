@@ -1,0 +1,200 @@
+/* Music Player Styles */
+.music-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding: 10px 20px;
+    background: #000033;
+    /* Dark background */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    gap: 10px;
+ 
+}
+
+.music-player .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.music-player button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.3rem;
+    /* Consistent size */
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.music-player button:hover {
+    transform: scale(1.2);
+    /* Slight zoom effect on hover */
+    color: #1e90ff;
+    /* Optional: change color on hover */
+}
+
+.music-player .progress-bar {
+    flex-grow: 0.9;
+    margin: 0 15px;
+    height: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(to right, #1e90ff 0%, #1e90ff var(--progress, 0%), #fff var(--progress, 0%), #fff 100%);
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.volume-bar {
+    width: 90px;
+    flex-grow: 0.7;
+    height: 5px;
+}
+
+.right-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Song Name Container */
+#song-name-container {
+    position: relative;
+    overflow: hidden;
+    width: 10vw;
+    left: -0.9rem;
+}
+
+#song-name {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Shuffle and Repeat Buttons */
+#shuff,
+#repeat,
+#shuffleBtn,
+#repeatBtn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    transition: color 0.2s, transform 0.2s;
+}
+
+#shuffleBtn.active i,
+#repeatBtn.active i {
+    color: #1e90ff;
+    /* Change to blue when active */
+}
+
+#shuffleBtn:hover,
+#repeatBtn:hover {
+    transform: scale(1.2);
+    /* Slight zoom effect */
+    color: #1e90ff;
+    /* Optional: change color on hover */
+}
+
+#shuff i {
+    font-size: 1rem;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 762px) {
+    .music-player {
+        flex-direction: row;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .music-player .player-controls {
+        gap: 10px;
+    }
+
+    .music-player .progress-bar {
+        margin: 0 10px;
+        height: 5px;
+    }
+
+    .music-player .volume-bar {
+        width: 60px;
+    }
+
+    .time {
+        display: none;
+    }
+
+    #song-name-container {
+        display: none;
+    }
+}
+
+/* Favorite Icon Styles */
+#fav {
+    font-size: 1rem;
+    color: white;
+    /* Default color (empty heart) */
+    cursor: pointer;
+    transition: color 0.3s ease;
+    /* Smooth color transition */
+}
+
+/* When clicked, fill the heart with red */
+#fav.clicked {
+    color: red;
+    /* Filled heart turns red when clicked */
+}
+
+/* Optional: Hover effect */
+#fav:hover {
+    color: red;
+    /* Light red hover effect */
+}
+
+
+
+@media (max-width: 480px) {
+
+    .music-player{
+        height: 80px;
+       
+    }
+
+
+    #shuffleBtn{
+        display: none;
+
+    }
+
+    #repeatBtn{
+        display: none;
+    }
+
+    
+}
+
+

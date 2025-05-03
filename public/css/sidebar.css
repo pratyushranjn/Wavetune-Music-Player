@@ -1,0 +1,256 @@
+.sidebar {
+    background: linear-gradient(189.71deg, #042077 0%, #000033 98.77%);
+    padding: 15px;
+    color: white;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar hidden state */
+.sidebar.hidden {
+    transform: translateX(-100%);
+}
+
+/* Sidebar options */
+.option {
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.option ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0;
+    width: 100%;
+}
+
+.option li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+
+.option li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar icons */
+.option li i {
+    margin-right: 0.6rem;
+    font-size: 1.3rem;
+}
+
+
+/* Sidebar links */
+.sidebar-link {
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-link:hover {
+    color: #f8f8f8;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 220px;
+        transform: translateX(-100%);
+        position: fixed;
+        height: 100vh;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+}
+
+
+.sidebar.show {
+    transform: translateX(0);
+}
+
+
+.favorite-list {
+    opacity: 0;
+    transform: translateY(-10px);
+    display: block;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, transform 0.2s ease-in, visibility 0.3s;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-height: 270px;
+    background: transparent;
+    color: white;
+    padding: 9px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    border: 1px solid #4A90E2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Active class for animation */
+.favorite-list.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* Hide scrollbar in WebKit browsers */
+.favorite-list::-webkit-scrollbar {
+    display: none;
+}
+
+
+.favorite-list ul li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s;
+
+    padding: 5px 8px;
+    line-height: 1.2;
+    min-height: 24px;
+ 
+}
+
+
+.nf {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out !important;
+}
+
+/* Reduce opacity and add a slight scale effect on hover */
+.nf:hover {
+    opacity: 0.4 !important;
+    transform: scale(0.95) !important;
+}
+
+
+/* Make the icon red on hover for Favourite */
+.sidebar-link:not(.nf):hover i {
+    color: red !important;
+    transition: color 0.3s ease-in-out;
+}
+
+
+
+
+/* Ensure Hamburger is always on top */
+.hamburger {
+    display: none;
+    z-index: 3000;
+    /* Highest layer */
+    position: fixed;
+    /* Ensures it stays on top */
+    top: 1.75rem;
+    left: 1rem;
+    width: 23px;
+    height: 20px;
+    cursor: pointer;
+    animation: fadeSlideIn 0.3s ease-in-out;
+
+
+}
+
+/* Show and Animate Hamburger Only on Small Screens */
+@media (max-width: 768px) {
+
+    .option>ul {
+        margin-top: 1.25rem;
+    }
+
+    .hamburger {
+        display: block;
+        margin-bottom: 2rem;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: white;
+        border-radius: 2px;
+        position: absolute;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .hamburger span:nth-child(1) {
+        top: 0;
+    }
+
+    .hamburger span:nth-child(2) {
+        top: 10px;
+    }
+
+    .hamburger span:nth-child(3) {
+        top: 20px;
+    }
+
+    /* Animation for Hamburger to Cross */
+    .hamburger.open span:nth-child(1) {
+        transform: translateY(10px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+        transform: translateY(-10px) rotate(-45deg);
+    }
+}
+
+
+@media (max-width: 480px) {
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 22px;
+        /* Smaller size */
+        height: 18px;
+        opacity: 0.6;
+        /* Lower opacity for a subtle effect */
+
+        top: 1.47rem;
+    }
+
+}

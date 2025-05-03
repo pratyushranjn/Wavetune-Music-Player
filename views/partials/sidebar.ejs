@@ -1,0 +1,46 @@
+<aside class="sidebar">
+    <nav class="option">
+      <ul>
+        <li>
+          <a href="#" class="sidebar-link nf"
+            ><i class="fa-solid fa-folder"></i> Explore</a
+          >
+        </li>
+        <li>
+          <a href="#" class="sidebar-link nf"
+            ><i class="fa-solid fa-music"></i> Songs</a
+          >
+        </li>
+        <li>
+          <a href="#" class="sidebar-link nf"
+            ><i class="fa-solid fa-bolt"></i> Daily mix</a
+          >
+        </li>
+        <li>
+          <a href="#" class="sidebar-link nf"
+            ><i class="fa-solid fa-compact-disc"></i> Album</a
+          >
+        </li>
+        <li>
+          <a href="#" class="sidebar-link"
+            ><i class="fa-solid fa-heart"></i> Favourite</a
+          >
+        </li>
+
+        <div id="favoriteSongs" class="favorite-list">
+          <% if (user.favoriteSongs.length > 0) { %>
+            <ul>
+              <% user.favoriteSongs.forEach(song => { %>
+                <li class="fav-song-item" data-song='<%= JSON.stringify(song) %>'>
+                  <p><%= song.name %></p>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <p>No favorite songs added yet.</p>
+          <% } %>
+        </div>
+        
+      </ul>
+    </nav>
+  </aside>
