@@ -15,7 +15,8 @@ const helmet = require("helmet");
 const { errorHandler, logUserInfo } = require('./middleware.js');
 const methodOverride = require('method-override');
 
-const dbUrl = process.env.ATLAS_URL;
+// const dbUrl = process.env.ATLAS_URL;
+const dbUrl = 'mongodb://localhost:27017/music';
 
 const authRoutes = require("./routes/auth.js");
 const songRoutes = require("./routes/music.js");

@@ -15,17 +15,12 @@ const elements = {
     searchInput: document.getElementById("searchInput")
 };
 
-// Helper Function
 function getCurrentSong() {
-    let song = state.songList[state.currentSongIndex];
-    if (!song || !song.id) {
-        console.warn("Fallback to localStorage for current song");
-        const lastPlayed = localStorage.getItem("lastPlayedSong");
-        if (lastPlayed) {
-            song = JSON.parse(lastPlayed);
-        }
-    }
-    return song;
+    const song = state.songList[state.currentSongIndex];
+    if (song && song.id) return song;
+
+    const lastPlayed = localStorage.getItem("lastPlayedSong");
+    return lastPlayed ? JSON.parse(lastPlayed) : null;
 }
 
 // State Variables
@@ -157,40 +152,23 @@ export function playSong(song, index = null) {
 }
 
 // Control through earbuds and media keys
-if ('mediaSession' in navigator) {
-    const song = getCurrentSong();
+navigator.mediaSession.setActionHandler('play', () => {
+    elements.audioPlayer.play();
+    elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+});
 
-    if (song && song.name) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: song.name,
-            artist: song.album || "Unknown Album",
-            artwork: [
-                { src: song.thumbnail, sizes: '512x512', type: 'image/png' }
-            ]
-        });
-    } else {
-        console.warn("No valid song to set mediaSession metadata");
-    }
+navigator.mediaSession.setActionHandler('pause', () => {
+    elements.audioPlayer.pause();
+    elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+});
 
-    navigator.mediaSession.setActionHandler('play', () => {
-        elements.audioPlayer.play();
-        elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-    });
+navigator.mediaSession.setActionHandler('previoustrack', () => {
+    elements.prevBtn.click();
+});
 
-    navigator.mediaSession.setActionHandler('pause', () => {
-        elements.audioPlayer.pause();
-        elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-    });
-
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-        elements.prevBtn.click();
-    });
-
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-        elements.nextBtn.click();
-    });
-}
-
+navigator.mediaSession.setActionHandler('nexttrack', () => {
+    elements.nextBtn.click();
+});
 
 
 // Update Progress Bar
@@ -390,6 +368,5 @@ elements.favIcon.addEventListener("click", async () => {
         console.error("Error updating favorites:", error);
     }
 });
-
 
 
