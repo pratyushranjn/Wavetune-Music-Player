@@ -21,33 +21,17 @@ const fetchSongsFromAPI = async (query, page, limit) => {
     });
 
     const songs = data?.data?.results?.filter(item => item.type === "song") || [];
-
-    return songs.map(song => {
-     
-      const safeSongLink = song.url ? song.url.replace(/^http:\/\//i, 'https://') : "";
-
-      let safeAudioLink = "";
-
-      if (
-        song.downloadUrl &&
-        song.downloadUrl[4] &&
-        typeof song.downloadUrl[4].link === "string"
-      ) {
-        safeAudioLink = song.downloadUrl[4].link.replace(/^http:\/\//i, 'https://');
-      }
-
-      return {
-        id: song.id,
-        title: song.name,
-        album: song.album?.name || "Unknown Album",
-        albumUrl: song.album?.url || "",
-        duration: song.duration,
-        coverImage: song.image?.[2]?.url || "//assets/default.png",
-        songLink: safeSongLink,
-        artists: song.primaryArtists || [],
-        audioLinks: safeAudioLink,
-      };
-    });
+    return songs.map(song => ({
+      id: song.id,
+      title: song.name,
+      album: song.album?.name || "Unknown Album",
+      albumUrl: song.album?.url || "",
+      duration: song.duration,
+      coverImage: song.image?.[2]?.url || "//assets/default.png",
+      songLink: song.url,
+      artists: song.primaryArtists || [],
+      audioLinks: song.downloadUrl?.[4] 
+    }));
   } catch (error) {
     console.error("Error fetching songs:", error.message);
     return null;
