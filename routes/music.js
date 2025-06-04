@@ -73,6 +73,8 @@ router.post("/add-to-favorites", isLoggedIn, async (req, res) => {
       thumbnail: song.thumbnail
     };
 
+    // console.log(songData);
+
     await User.findByIdAndUpdate(userId, { $push: { favoriteSongs: songData } });
     res.json({ message: "Song added to favorites!" });
   } catch (error) {
@@ -90,8 +92,6 @@ router.post("/remove-from-favorites", isLoggedIn, async (req, res) => {
   if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
   try {
-    console.log("Removing song with ID:", songId); // Debugging
-
     const result = await User.findByIdAndUpdate(
       userId,
       { $pull: { favoriteSongs: { id: songId } } },
@@ -100,10 +100,10 @@ router.post("/remove-from-favorites", isLoggedIn, async (req, res) => {
 
     if (!result) return res.status(404).json({ error: "User not found or song not in favorites" });
 
-    console.log("Updated favorites:", result.favoriteSongs);
+    //console.log("Updated favorites:", result.favoriteSongs);
     res.json({ message: "Song removed from favorites!", updatedFavorites: result.favoriteSongs });
   } catch (error) {
-    console.error("Error removing from favorites:", error);
+   // console.error("Error removing from favorites:", error);
     res.status(500).json({ error: "Failed to remove song from favorites." });
   }
 });

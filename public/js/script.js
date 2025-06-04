@@ -15,6 +15,18 @@ const elements = {
     searchInput: document.getElementById("searchInput")
 };
 
+// Helper Function
+function getCurrentSong() {
+    let song = state.songList[state.currentSongIndex];
+    if (!song || !song.id) {
+        console.warn("Fallback to localStorage for current song");
+        const lastPlayed = localStorage.getItem("lastPlayedSong");
+        if (lastPlayed) {
+            song = JSON.parse(lastPlayed);
+        }
+    }
+    return song;
+}
 
 // State Variables
 const state = {
@@ -58,12 +70,12 @@ const searchSongs = async (query) => {
     } catch (error) {
         console.error("Error fetching search results:", error);
         if (elements.resultsContainer) {
-            elements.resultsContainer.innerHTML = "<div>⚠️ No songs found for your search query.</div>";
+            elements.resultsContainer.innerHTML = "<div>⚠️ No songs found for your search query</div>";
         }
     }
 };
 
-// Render Search Results
+// Search Results
 const renderSearchResults = () => {
     const { songList } = state;
     const { resultsContainer } = elements;
@@ -75,26 +87,28 @@ const renderSearchResults = () => {
 
     resultsContainer.innerHTML = songList.length === 0 ? "<div>No results found</div>" : "";
 
-    songList.slice(0, 20).forEach(song => {
+    songList.slice(0, 20).forEach((song, index) => {
         const resultItem = document.createElement("div");
         resultItem.classList.add("search-result");
         resultItem.innerHTML = `
-            <div>
-                <p class="song-title">${song.name}</p>
-                <p class="song-album">${song.album}</p>
-            </div>
-            <img src="${song.thumbnail}" alt="${song.name}" class="song-img">
-        `;
+        <div>
+            <p class="song-title">${song.name}</p>
+            <p class="song-album">${song.album}</p>
+        </div>
+        <img src="${song.thumbnail}" alt="${song.name}" class="song-img">
+    `;
 
-        resultItem.addEventListener("click", () => playSong(song));
+        resultItem.addEventListener("click", () => playSong(song, index)); // Pass index here
         resultsContainer.appendChild(resultItem);
     });
+
 
     resultsContainer.style.display = songList.length > 0 ? "block" : "none";
 };
 
+
 // Play Song 
-export function playSong(song) {
+export function playSong(song, index = null) {
     if (!song) {
         console.error("Invalid song data", song);
         alert("Invalid song data. Please try again.");
@@ -109,29 +123,69 @@ export function playSong(song) {
         return;
     }
 
+    // Save current song to localStorage
+    localStorage.setItem("lastPlayedSong", JSON.stringify(song));
+
     // Update UI and play the song
     document.title = `${song.name} | WaveTune 🌊`;
-    
     elements.songNameElement.textContent = song.name;
+
     const imgElement = document.querySelector(".music-player img");
-    imgElement.src = song.thumbnail || thumbnail;
-    imgElement.setAttribute("draggable", "false"); 
-    imgElement.oncontextmenu = (e) => e.preventDefault(); 
+    imgElement.src = song.thumbnail || "/assets/radha_krishna.png";
+    imgElement.setAttribute("draggable", "false");
+    imgElement.oncontextmenu = (e) => e.preventDefault();
 
     elements.songNameElement.style.animation = 'none';
     setTimeout(() => elements.songNameElement.style.animation = 'marquee 10s linear infinite', 12);
 
-    // Set the audio URL and load the audio player
     elements.audioPlayer.src = audioUrl;
     elements.audioPlayer.load();
     elements.audioPlayer.play();
+
     elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
 
-    // Update Progress Bar
-    state.currentSongIndex = state.songList.indexOf(song);
-    updateProgressBar();
+    // Fix: use provided index if available
+    if (index !== null && index >= 0) {
+        state.currentSongIndex = index;
+    } else {
+        state.currentSongIndex = state.songList.findIndex(s => s.id === song.id);
+    }
 
+    updateProgressBar();
     checkIfFavorite(song.id);
+
+}
+
+
+// Control through earbuds and media keys
+if ('mediaSession' in navigator) {
+    const song = getCurrentSong();
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: song.name,
+        artist: song.album || "Unknown Album",
+        artwork: [
+            { src: song.thumbnail, sizes: '512x512', type: 'image/png' }
+        ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', () => {
+        elements.audioPlayer.play();
+        elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    });
+
+    navigator.mediaSession.setActionHandler('pause', () => {
+        elements.audioPlayer.pause();
+        elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+        elements.prevBtn.click();
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+        elements.nextBtn.click();
+    });
 }
 
 // Update Progress Bar
@@ -155,7 +209,6 @@ const formatTime = (seconds) => {
 const updateTimeDisplay = () => {
     elements.currentTimeElement.textContent = formatTime(elements.audioPlayer.currentTime);
 };
-
 
 // Event Listeners
 elements.playPauseBtn.addEventListener("click", () => {
@@ -198,13 +251,28 @@ elements.audioPlayer.addEventListener("ended", () => {
 
 elements.muteBtn.addEventListener("click", () => {
     elements.audioPlayer.muted = !elements.audioPlayer.muted;
-    elements.muteBtn.innerHTML = elements.audioPlayer.muted ? '<i class="fa-solid fa-volume-mute"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+
+    // If manually muted, set volume bar to 0 visually but retain actual volume
+    if (elements.audioPlayer.muted) {
+        elements.muteBtn.innerHTML = '<i class="fa-solid fa-volume-mute"></i>';
+    } else {
+        elements.muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    }
 });
 
 elements.volumeBar.addEventListener("input", () => {
     const volume = elements.volumeBar.value / elements.volumeBar.max;
     elements.audioPlayer.volume = volume;
     elements.volumeBar.style.setProperty('--volume', `${volume * 100}%`);
+
+    // Sync mute state with volume
+    if (volume === 0) {
+        elements.audioPlayer.muted = true;
+        elements.muteBtn.innerHTML = '<i class="fa-solid fa-volume-mute"></i>';
+    } else {
+        elements.audioPlayer.muted = false;
+        elements.muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    }
 });
 
 elements.progressBar.addEventListener("input", () => {
@@ -234,6 +302,39 @@ elements.audioPlayer.addEventListener("timeupdate", () => {
 });
 
 
+window.addEventListener("DOMContentLoaded", () => {
+    const lastPlayed = localStorage.getItem("lastPlayedSong");
+    if (lastPlayed) {
+        const song = JSON.parse(lastPlayed);
+
+        // Don't autoplay; just set up the song UI and audio source
+        const audioUrl = song.audioUrls?.[0]?.url || song.audioUrl;
+        if (audioUrl) {
+            elements.audioPlayer.src = audioUrl;
+            document.title = `${song.name} | WaveTune 🌊`;
+            elements.songNameElement.textContent = song.name;
+
+            const imgElement = document.querySelector(".music-player img");
+            imgElement.src = song.thumbnail || "/assets/radha_krishna.png";
+            imgElement.setAttribute("draggable", "false");
+            imgElement.oncontextmenu = (e) => e.preventDefault();
+
+            elements.songNameElement.style.animation = 'none';
+            setTimeout(() => elements.songNameElement.style.animation = 'marquee 10s linear infinite', 12);
+
+            elements.playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>'; // Set to play icon
+            state.currentSongIndex = state.songList.findIndex(s => s.id === song.id);
+            if (state.currentSongIndex === -1) {
+                state.songList.unshift(song); // Ensure songList contains this song
+                state.currentSongIndex = 0;
+            }
+
+            checkIfFavorite(song.id);
+        }
+    }
+});
+
+
 // Check if Song is Favorited
 const checkIfFavorite = async (songId) => {
     try {
@@ -252,17 +353,25 @@ const checkIfFavorite = async (songId) => {
 
 
 elements.favIcon.addEventListener("click", async () => {
-    const song = state.songList[state.currentSongIndex] ;
-    if (!song) return;
+    const currentSong = getCurrentSong();
 
+    if (!currentSong || !currentSong.id) {
+        console.error("No valid song selected");
+        return;
+    }
+
+    // Flip the value (toggle)
     state.isFavorited = !state.isFavorited;
+
+    // Update heart icon UI
     elements.favIcon.classList.toggle("clicked", state.isFavorited);
     elements.favIcon.classList.toggle("fa-regular", !state.isFavorited);
     elements.favIcon.classList.toggle("fa-solid", state.isFavorited);
 
     try {
-        const endpoint = state.isFavorited ? "/add-to-favorites" : "/remove-from-favorites"; // using ternary operator
-        const body = state.isFavorited ? { song } : { songId: song.id };
+        // Send request to backend
+        const endpoint = state.isFavorited ? "/add-to-favorites" : "/remove-from-favorites";
+        const body = state.isFavorited ? { song: currentSong } : { songId: currentSong.id };
 
         const response = await fetch(endpoint, {
             method: "POST",
@@ -276,5 +385,6 @@ elements.favIcon.addEventListener("click", async () => {
         console.error("Error updating favorites:", error);
     }
 });
+
 
 

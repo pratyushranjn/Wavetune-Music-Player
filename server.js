@@ -12,8 +12,12 @@ const flash = require("express-flash");
 const User = require("./models/user.js");
 const path = require("path");
 const helmet = require("helmet");
+const { errorHandler, logUserInfo } = require('./middleware.js');
+const methodOverride = require('method-override');
 
-const dbUrl = process.env.ATLAS_URL;
+// const dbUrl = process.env.ATLAS_URL;
+
+const dbUrl = "mongodb://localhost:27017/music";
 
 const authRoutes = require("./routes/auth.js");
 const songRoutes = require("./routes/music.js");
@@ -26,6 +30,8 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride('_method'));
+
 
 app.use(helmet
   ({ contentSecurityPolicy: false }));
@@ -61,7 +67,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(User.authenticate()));
+// Passport Strategy
+passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -89,9 +96,11 @@ app.use(songRoutes);
 app.use((req, res, next) => {
   res.status(404).render("error", {
     errorTitle: "Page Not Found",
-    errorMessage: "The page you're looking for doesn't exist. Please check the URL and try again.",
+    errorMessage: "The page you're looking for doesn't exist.",
   });
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

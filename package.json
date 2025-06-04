@@ -3,7 +3,7 @@
     "node": ">=18"
   },
   "name": "wavetune",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "WaveTune Music Player",
   "main": "server.js",
   "type": "commonjs",
@@ -30,6 +30,7 @@
     "mongoose": "^8.9.5",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^8.0.0"
+    "passport-local-mongoose": "^8.0.0",
+    "ua-parser-js": "^2.0.3"
   }
 }

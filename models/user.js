@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     match: [/.+@.+\..+/, "Please enter a valid email address"]
   },
+
   favoriteSongs: [
     {
       id: {
@@ -38,6 +39,17 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-userSchema.plugin(passportLocalMongoose);
+// Tells passport-local-mongoose to use `email` for login
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: 'email',
+  errorMessages: {
+    IncorrectPasswordError: 'Password is incorrect',
+    IncorrectUsernameError: 'Username is incorrect',
+    MissingUsernameError: 'Username is required',
+    MissingPasswordError: 'Password is required',
+  }
+
+});
+
 
 module.exports = mongoose.model("User", userSchema);

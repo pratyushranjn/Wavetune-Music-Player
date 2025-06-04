@@ -2,7 +2,7 @@ let currentPage = 1;
 const songsPerPage = 40;
 let songData = [];
 let currentIndex = 0;
-const CACHE_TIME = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+const CACHE_TIME = 24 * 60 * 60 * 1000;
 
 import { playSong } from "./script.js";
 
@@ -99,6 +99,7 @@ function loadMoreSongs() {
         songCard.addEventListener("click", (event) => {
             event.preventDefault(); 
             event.stopPropagation();
+           
 
             playSong({
                 id: song.id,
@@ -113,7 +114,6 @@ function loadMoreSongs() {
     artistSection.appendChild(fragment); 
 }
 
-// Load cached songs first, else fetch new songs
 if (!loadCachedSongs()) {
     fetchSongs();
 }

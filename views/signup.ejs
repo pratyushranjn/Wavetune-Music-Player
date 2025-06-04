@@ -15,6 +15,10 @@
     <div class="container">
       <div class="login-box">
         <h2 class="login-title">Sign Up</h2>
+        
+        <% if (messages && messages.length > 0) { %>
+          <h6 class="errormsg"><%= messages[0] %></h6>
+        <% } %> 
 
         <form action="/signup" method="post" id="signup-form">
           <div>

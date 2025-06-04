@@ -99,6 +99,12 @@
 .dev {
     text-align: center;
     cursor: pointer;
+    
+}
+
+.dev a {
+   text-decoration: unset;
+   color: white; 
 }
 
 @media (max-width: 480px) {  
@@ -110,6 +116,6 @@
         width: 100%;
         text-align: center;
         padding: 10px 0;
-        color: white; 
+        
     }
 }

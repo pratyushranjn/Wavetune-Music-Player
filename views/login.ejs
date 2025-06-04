@@ -10,30 +10,27 @@
 </head>
 <body>
     <div class="container">
-
         <div class="login-box">
-            <h2 class="login-title">Login </h2>
-            <% if (messages.length > 0) { %>
-                <h6 class="errormsg"><%= messages[0] %></h6>
-            <% } %>
+            <h2 class="login-title">Login</h2>
 
-            <% if (typeof msg !== 'undefined') { %>
-                <h6 class="errormsg"><%= msg  %> </h6> <!-- Show the error message if passed -->
-            <% } %>
+            <% if (messages && messages.length > 0) { %>
+                <h6 class="errormsg"><%= messages[0] %></h6>
+            <% } %> 
+
             <form action="/login" method="post">
                 <div>
-                  <input name="username" type="text" class="form-control" id="username" placeholder="Username" required>
+                    <input name="email" type="text" class="form-control" id="email" placeholder="Email" required>
                 </div>
                 <div>
-                  <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Log In</button>
-              </form>
+            </form>
+
             <p class="signup-link">
                 Don't have an account? <a href="/signup">Sign Up</a>
             </p>
         </div>
     </div>    
-
 </body>
 </html>

@@ -7,61 +7,73 @@
           <span></span>
           <span></span>
           <span></span>
-      </div>
-      <!-- Sidebar Section -->
-      <%- include('partials/sidebar') %>
-      <!-- Main Content Section -->
-      <main class="box">
-        <!-- Upper Section -->
-        <section class="up">
-          <div class="navbar">
-            <div id="searchForm">
-              <i class="fa-solid fa-magnifying-glass glass"></i>
-              <input
-                type="text"
-                placeholder="Search song"
-                class="search-bar"
-                id="searchInput"
-              />
-              <div id="search-results" class="search-result"></div>
-            </div>
+        </div>
+        <!-- Sidebar Section -->
+        <%- include('partials/sidebar') %>
+          <!-- Main Content Section -->
+          <main class="box">
+            <!-- Upper Section -->
+            <section class="up">
+              <div class="navbar">
+                <div id="searchForm">
+                  <i class="fa-solid fa-magnifying-glass glass"></i>
+                  <input type="text" placeholder="Search song" class="search-bar" id="searchInput" />
+                  <div id="search-results" class="search-result"></div>
+                </div>
 
-            <div class="user">
-              
-              <span class="user-name" id="userName"><%= user.username %> </span>
+                <div class="user">
+                  <span class="user-name" id="userName">
+                    <%= user.username %>
+                  </span>
+                  <i class="fas fa-chevron-down down-arrow" id="arrow"></i>
+                </div>
+              </div>
 
-              <i class="fas fa-chevron-down down-arrow" id="arrow"></i>
+              <div class="user-settings-panel" id="userSettingsPanel">
+                  <span class="remove-user-icon">
+                  <i class="fas fa-user-times"></i>
+                </span>
 
-              <form action="/logout" method="post">
-                <button class="logout" id="logoutBtn">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3H5.25A2.25 2.25 0 003 5.25v13.5A2.25 2.25 0 005.25 21H13.5a2.25 2.25 0 002.25-2.25V15M21 12h-9m0 0l3-3m-3 3l3 3"
-                    />
-                  </svg>
-                  Logout
-                </button>
+                
+              <h3>Edit profile</h3>
+              <form action="/update-user/<%= user._id %>" method="POST">
+                <div class="mui-input-container">
+                  <label for="name" class="mui-floating-label">Username</label>
+                  <input type="text" id="name" name="name" placeholder="<%= user.username %>" value="<%= user.username %>" >
+                </div>
+                <div class="mui-input-container">
+                  <label for="email" class="mui-floating-label">Email</label>
+                  <input type="email" id="email" name="email" placeholder="<%= user.email %>" value="<%= user.email %>">
+                </div>
+                <div class="mui-input-container">
+                  <label for="password" class="mui-floating-label">Password</label>
+                  <input type="password" id="password" name="password" placeholder="password" required>
+                </div>
+                <button type="submit" id="save">Save Changes</button>
               </form>
-            </div>
-          </div>
 
-          <div class="image top">
-            <div class="cover-image"></div>
-          </div>
-        </section>
 
-        <%- include('partials/card') %>
+                <form action="/logout" method="POST">
+                  <button class="logout">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3H5.25A2.25 2.25 0 003 5.25v13.5A2.25 2.25 0 005.25 21H13.5a2.25 2.25 0 002.25-2.25V15M21 12h-9m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                    Logout
+                  </button>
+                </form>
+              </div>
+                    <div class="image top">
+                      <div class="cover-image"></div>
+                    </div>
+            </section>
 
-        <%- include('partials/player') %>
-      </main>
+            <%- include('partials/card') %>
+
+              <%- include('partials/player') %>
+          </main>
+     
     </div>
   </body>
-</html>
+  </html>
