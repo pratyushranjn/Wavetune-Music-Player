@@ -47,7 +47,6 @@ const searchSongs = async (query) => {
         const response = await fetch(`/song-details?song=${encodeURIComponent(query)}`);
         if (!response.ok) throw new Error("Failed to fetch songs");
         const data = await response.json();
-        console.log(data);
 
         if (!Array.isArray(data)) {
             console.error("Expected an array but got:", data);
@@ -71,7 +70,6 @@ const searchSongs = async (query) => {
         }
     }
 };
-
 
 
 // Search Results

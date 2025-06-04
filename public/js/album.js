@@ -30,7 +30,7 @@ function loadCachedSongs() {
 
 async function fetchSongs() {
     try {
-        const artists = ["Anuv Jain", "Arijit", "Indresh","KK"];
+        const artists = ["Anuv Jain", "Arijit", "Indresh", "KK"];
 
         // Fetch songs in parallel
         const responses = await Promise.all(
@@ -46,7 +46,7 @@ async function fetchSongs() {
 
         // Shuffle and merge new songs
         songData = shuffleArray([...songData, ...songs]);
-       // console.log(songData);
+        // console.log(songData);
 
         // Store in localStorage with a timestamp
         localStorage.setItem("cachedSongs", JSON.stringify(songData));
@@ -77,7 +77,7 @@ function loadMoreSongs() {
         const songCard = document.createElement('a');
         songCard.classList.add('card-link');
         songCard.href = "#";
-        songCard.style.pointerEvents = "auto"; 
+        songCard.style.pointerEvents = "auto";
 
         const songElement = document.createElement('div');
         songElement.classList.add('card', 'circle');
@@ -98,20 +98,23 @@ function loadMoreSongs() {
 
         // Play song on click 
         songCard.addEventListener("click", (event) => {
-            event.preventDefault(); 
+            event.preventDefault();
             event.stopPropagation();
-           
+
+            const rawUrl = song.audioLinks?.[0]?.url || song.audioLinks?.url || "";
+            const secureUrl = rawUrl.replace(/^http:\/\//, 'https://');
+
             playSong({
                 id: song.id,
                 name: song.title,
                 album: song.album,
                 thumbnail: song.coverImage,
-                audioUrls: [{ url: song.audioLinks?.[0]?.url || song.audioLinks.url }]
+                 audioUrls: [{ url: secureUrl }]
             });
         });
     });
 
-    artistSection.appendChild(fragment); 
+    artistSection.appendChild(fragment);
 }
 
 if (!loadCachedSongs()) {
