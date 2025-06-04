@@ -156,18 +156,21 @@ export function playSong(song, index = null) {
 
 }
 
-
 // Control through earbuds and media keys
 if ('mediaSession' in navigator) {
     const song = getCurrentSong();
 
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: song.name,
-        artist: song.album || "Unknown Album",
-        artwork: [
-            { src: song.thumbnail, sizes: '512x512', type: 'image/png' }
-        ]
-    });
+    if (song && song.name) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: song.name,
+            artist: song.album || "Unknown Album",
+            artwork: [
+                { src: song.thumbnail, sizes: '512x512', type: 'image/png' }
+            ]
+        });
+    } else {
+        console.warn("No valid song to set mediaSession metadata");
+    }
 
     navigator.mediaSession.setActionHandler('play', () => {
         elements.audioPlayer.play();
@@ -187,6 +190,8 @@ if ('mediaSession' in navigator) {
         elements.nextBtn.click();
     });
 }
+
+
 
 // Update Progress Bar
 const updateProgressBar = () => {
