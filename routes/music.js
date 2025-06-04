@@ -8,9 +8,10 @@ const router = express.Router();
 // 50 requests per minute per IP
 const songLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  max: 50, 
+  max: 50,
   message: { error: "Too many requests, please try again later." }
 });
+
 
 // Fetch Songs
 const fetchSongsFromAPI = async (query, page, limit) => {
@@ -20,22 +21,42 @@ const fetchSongsFromAPI = async (query, page, limit) => {
     });
 
     const songs = data?.data?.results?.filter(item => item.type === "song") || [];
-    return songs.map(song => ({
-      id: song.id,
-      title: song.name,
-      album: song.album?.name || "Unknown Album",
-      albumUrl: song.album?.url || "",
-      duration: song.duration,
-      coverImage: song.image?.[2]?.url || "//assets/default.png",
-      songLink: song.url,
-      artists: song.primaryArtists || [],
-      audioLinks: song.downloadUrl?.[4] 
-    }));
+
+    return songs.map(song => {
+     
+      const safeSongLink = song.url ? song.url.replace(/^http:\/\//i, 'https://') : "";
+
+      let safeAudioLink = "";
+
+      if (
+        song.downloadUrl &&
+        song.downloadUrl[4] &&
+        typeof song.downloadUrl[4].link === "string"
+      ) {
+        safeAudioLink = song.downloadUrl[4].link.replace(/^http:\/\//i, 'https://');
+      }
+
+      return {
+        id: song.id,
+        title: song.name,
+        album: song.album?.name || "Unknown Album",
+        albumUrl: song.album?.url || "",
+        duration: song.duration,
+        coverImage: song.image?.[2]?.url || "//assets/default.png",
+        songLink: safeSongLink,
+        artists: song.primaryArtists || [],
+        audioLinks: safeAudioLink,
+      };
+    });
   } catch (error) {
     console.error("Error fetching songs:", error.message);
     return null;
   }
 };
+
+
+
+
 
 // Fetch Song Details
 router.get('/song-details', songLimiter, async (req, res) => {
@@ -103,7 +124,7 @@ router.post("/remove-from-favorites", isLoggedIn, async (req, res) => {
     //console.log("Updated favorites:", result.favoriteSongs);
     res.json({ message: "Song removed from favorites!", updatedFavorites: result.favoriteSongs });
   } catch (error) {
-   // console.error("Error removing from favorites:", error);
+    // console.error("Error removing from favorites:", error);
     res.status(500).json({ error: "Failed to remove song from favorites." });
   }
 });
