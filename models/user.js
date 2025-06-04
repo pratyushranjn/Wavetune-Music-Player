@@ -44,12 +44,12 @@ userSchema.plugin(passportLocalMongoose, {
   usernameField: 'email',
   errorMessages: {
     IncorrectPasswordError: 'Password is incorrect',
-    IncorrectUsernameError: 'Username is incorrect',
-    MissingUsernameError: 'Username is required',
+    IncorrectUsernameError: 'Email is not registered',
+    MissingUsernameError: 'Email is required',
     MissingPasswordError: 'Password is required',
   }
-
 });
+
 
 
 module.exports = mongoose.model("User", userSchema);

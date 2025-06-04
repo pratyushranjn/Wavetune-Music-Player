@@ -44,9 +44,8 @@ router.post("/login", (req, res, next) => {
       return next(new Error("Error during authentication: " + err.message));
     }
 
-    if (!user) {
-      // Override the message here
-      req.flash('error', info?.message ? info.message.replace(/username/gi, 'email') : "Password or email is incorrect");
+  if (!user) {
+      req.flash('error', info?.message || "Password or email is incorrect");
       return res.redirect('/login');
     }
 

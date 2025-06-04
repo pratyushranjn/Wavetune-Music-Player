@@ -38,12 +38,12 @@
               <h3>Edit profile</h3>
               <form action="/update-user/<%= user._id %>" method="POST">
                 <div class="mui-input-container">
-                  <label for="name" class="mui-floating-label">Username</label>
-                  <input type="text" id="name" name="name" placeholder="<%= user.username %>" value="<%= user.username %>" >
+                  <label for="name" class="mui-floating-label">Name</label>
+                  <input type="text" id="name" name="name" placeholder="<%= user.username %>" >
                 </div>
                 <div class="mui-input-container">
                   <label for="email" class="mui-floating-label">Email</label>
-                  <input type="email" id="email" name="email" placeholder="<%= user.email %>" value="<%= user.email %>">
+                  <input type="email" id="email" name="email" placeholder="<%= user.email %>" >
                 </div>
                 <div class="mui-input-container">
                   <label for="password" class="mui-floating-label">Password</label>
