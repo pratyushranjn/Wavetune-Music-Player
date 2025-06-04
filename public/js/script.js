@@ -23,6 +23,20 @@ function getCurrentSong() {
     return lastPlayed ? JSON.parse(lastPlayed) : null;
 }
 
+
+export function setPlaylistAndPlay(playlist, index) {
+    if (!Array.isArray(playlist) || playlist.length === 0) {
+        console.error("Invalid playlist provided");
+        return;
+    }
+
+    state.songList = playlist;
+    state.currentSongIndex = index;
+    playSong(playlist[index], index)
+
+}
+
+
 // State Variables
 const state = {
     isFavorited: false,
@@ -213,6 +227,7 @@ elements.nextBtn.addEventListener("click", () => {
     }
 });
 
+
 elements.prevBtn.addEventListener("click", () => {
     if (state.songList.length > 0) {
         state.currentSongIndex = (state.currentSongIndex - 1 + state.songList.length) % state.songList.length;
@@ -232,6 +247,8 @@ elements.audioPlayer.addEventListener("ended", () => {
         elements.nextBtn.click();
     }
 });
+
+
 
 elements.muteBtn.addEventListener("click", () => {
     elements.audioPlayer.muted = !elements.audioPlayer.muted;
