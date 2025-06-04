@@ -46,6 +46,7 @@ async function fetchSongs() {
 
         // Shuffle and merge new songs
         songData = shuffleArray([...songData, ...songs]);
+       // console.log(songData);
 
         // Store in localStorage with a timestamp
         localStorage.setItem("cachedSongs", JSON.stringify(songData));
@@ -100,7 +101,6 @@ function loadMoreSongs() {
             event.preventDefault(); 
             event.stopPropagation();
            
-
             playSong({
                 id: song.id,
                 name: song.title,

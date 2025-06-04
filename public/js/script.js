@@ -47,6 +47,7 @@ const searchSongs = async (query) => {
         const response = await fetch(`/song-details?song=${encodeURIComponent(query)}`);
         if (!response.ok) throw new Error("Failed to fetch songs");
         const data = await response.json();
+        console.log(data);
 
         if (!Array.isArray(data)) {
             console.error("Expected an array but got:", data);
@@ -58,7 +59,8 @@ const searchSongs = async (query) => {
             name: song.title,
             album: song.album || "Unknown Album",
             thumbnail: song.coverImage || "/assets/radha_krishna.png",
-            audioUrl: song.audioLinks?.url || ""
+            audioUrl: song.audioLinks?.url?.replace(/^http:\/\//, 'https://') || ""
+
         }));
 
         renderSearchResults();

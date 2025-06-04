@@ -38,10 +38,6 @@ const fetchSongsFromAPI = async (query, page, limit) => {
   }
 };
 
-
-
-
-
 // Fetch Song Details
 router.get('/song-details', songLimiter, async (req, res) => {
   const { song, artist, page = 1, limit = 30 } = req.query;
@@ -55,6 +51,7 @@ router.get('/song-details', songLimiter, async (req, res) => {
   }
 
   res.json(songData);
+ // console.log(songData);
 });
 
 // Add to Favorites
